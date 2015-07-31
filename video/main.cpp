@@ -18,8 +18,8 @@
 using namespace cv;
 using namespace std;
 
-string path = "/Users/Lucas/Desktop/uscan/10x10_3/";
-int order = 10;
+string path = "/Users/Lucas/Desktop/uscan/20x20_2/";
+int order = 20;
 
 int convertImg(){
    
@@ -51,16 +51,16 @@ int main(int argc, const char * argv[]) {
     //float borderHeight = 0;
     float letterSize = 6;
     Scalar fontColor = Scalar(0,0,255);  //BGR
-    Size imageSize = Size(15000, 12000);
+    Size imageSize = Size(15000, 10000);
     //Size imageSize = Size(2560, 1440);
     Point posLabel = Point(1940*0.4,1080*0.4);
     string fileExtension = "_c.png";
-    string outFile = "out.png";
+    string outFile = "outNoBorder.png";
     string photoText = "";
     Mat img;
     bool debug = true;
     
-    convertImg();
+    //convertImg();  descomenta se precisar converter imagens
     
     for (int i = 0 ; i < order*order; i++) {
         
