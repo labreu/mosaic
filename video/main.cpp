@@ -60,7 +60,7 @@ int main(int argc, const char * argv[]) {
     Mat img;
     bool debug = true;
     
-    //convertImg();  descomenta se precisar converter imagens
+    //convertImg();  descomenta se precisar converter imagens  
     
     for (int i = 0 ; i < order*order; i++) {
         
