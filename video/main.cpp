@@ -53,14 +53,14 @@ int main(int argc, const char * argv[]) {
     Scalar fontColor = Scalar(0,0,255);  //BGR
     Size imageSize = Size(15000, 10000);
     //Size imageSize = Size(2560, 1440);
-    Point posLabel = Point(1940*0.4,1080*0.4);
+    Point positionLabel = Point(1940*0.4,1080*0.4);
     string fileExtension = "_c.png";
     string outFile = "outNoBorder.png";
     string photoText = "";
     Mat img;
     bool debug = true;
     
-    //convertImg();  descomenta se precisar converter imagens  
+    //convertImg();  descomenta se precisar converter imagens
     
     for (int i = 0 ; i < order*order; i++) {
         
@@ -70,7 +70,7 @@ int main(int argc, const char * argv[]) {
                 cout << "image empty"<<endl;
                 return 0 ;
             }
-            putText(img, photoText+to_string(i), posLabel, FONT_HERSHEY_COMPLEX, letterSize, fontColor);
+            putText(img, photoText+to_string(i), positionLabel, FONT_HERSHEY_COMPLEX, letterSize, fontColor);
             
             copyMakeBorder(img, img, borderHeight*img.rows, borderHeight*img.rows, borderWidth*img.cols, borderWidth*img.cols, BORDER_CONSTANT);
             
@@ -84,7 +84,7 @@ int main(int argc, const char * argv[]) {
         
         if(flag == 0){
             img = imread(path+to_string(i)+fileExtension);
-            putText(img, photoText+to_string(i), posLabel, FONT_HERSHEY_COMPLEX, letterSize, fontColor);
+            putText(img, photoText+to_string(i), positionLabel, FONT_HERSHEY_COMPLEX, letterSize, fontColor);
             copyMakeBorder(img, img, borderHeight*img.rows, borderHeight*img.rows, borderWidth*img.cols, borderWidth*img.cols, BORDER_CONSTANT);
             images.push_back(img);
             img.release();
@@ -99,7 +99,7 @@ int main(int argc, const char * argv[]) {
                 cout << endl;
             for (k=i+order-1; k>=i; k--) {
                 img = imread(path+to_string(k)+fileExtension);
-                putText(img,photoText+to_string(k), posLabel, FONT_HERSHEY_COMPLEX, letterSize, fontColor);
+                putText(img,photoText+to_string(k), positionLabel, FONT_HERSHEY_COMPLEX, letterSize, fontColor);
                 copyMakeBorder(img, img, borderHeight*img.rows, borderHeight*img.rows, borderWidth*img.cols, borderWidth*img.cols, BORDER_CONSTANT);
                 images.push_back(img);
                 if(debug)
@@ -124,7 +124,7 @@ int main(int argc, const char * argv[]) {
         cout<<endl;
         cout<<endl;
     }
-    destroyAllWindows();
+    
     Mat mosaic(imageSize, CV_8UC3);
     Mat tile;
     int n = 0;
@@ -132,14 +132,14 @@ int main(int argc, const char * argv[]) {
         for (int j=0; j<order; j++) {
             if(debug){
                 cout << n << endl;
-                cout<< i*(imageSize.width/order)<<" ";
+                cout<< i*(imageSize.width/order)<<" ";     //ponto onde a imagem vai ser encaixada
                 cout<< j*(imageSize.height/order)<<endl;
                 cout<<endl;
             }
             resize(images[n], tile ,Size((int)imageSize.width/order, (int)imageSize.height/order));
             
-            Rect region_of_interest = Rect(Point(j*imageSize.width/(1*order),
-                                                 i*imageSize.height/(1*order)),
+            Rect region_of_interest = Rect(Point(j*imageSize.width/(order),//mesmo ponto do cout acima
+                                                 i*imageSize.height/(order)),
                                                  tile.size());
             
             tile.copyTo(mosaic(region_of_interest));
